@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>圆形进度条svg+js</title>
+  <style>
+    .osvg {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+    }
+
+    .oround {
+      stroke-dasharray: 628;
+      stroke-dashoffset: 628;
+
+    }
+  </style>
+</head>
+
+<body>
+  <svg width="300" height="300" class="osvg">
+    <circle class="oround" cx="150" cy="150" r="100" fill="transparent" stroke-width="12" stroke="grey" />
+    <text x="150" y="150" font-size="24" fill="grey" text-anchor="middle" alignment-baseline="middle">0%</text>
+  </svg>
+</body>
+<script>
+  let oround = document.querySelector(".oround");
+  let otext = document.querySelector("text");
+  let olength = oround.getTotalLength();
+  let loadingArr = [];
+  for (let i = 0; i <= 100; i++) {
+    loadingArr.push(i);
+  }
+  let index = 0;
+  let timer = setInterval(() => {
+    oround.style.strokeDashoffset = olength - olength * (loadingArr[index] / 100);
+    otext.textContent = `${loadingArr[index]}%`
+    index++;
+
+    if (index === loadingArr.length) {
+      clearInterval(timer);
+      otext.textContent = "加载完毕";
+    }
+  }, 50)
+</script>
+
+</html>
